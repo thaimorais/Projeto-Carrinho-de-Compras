@@ -1,5 +1,12 @@
 const sectionItemsPai = document.querySelector('.items');
 const listCartItems = document.querySelector('.cart__items');
+const buttonEsvazia = document.querySelector('.empty-cart');
+
+const esvaziaCarrinho = () => {
+  listCartItems.innerHTML = '';
+};
+
+buttonEsvazia.addEventListener('click', esvaziaCarrinho);
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
