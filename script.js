@@ -51,7 +51,7 @@ function loadStorage() {
   if (localStorage.getItem('cartItems')) {
     listCartItems.innerHTML = getSavedCartItems();
     const listas = document.querySelectorAll('li');
-    listas.forEach((element) => element.addEventListener('click', cartItemClickListener)); 
+    listas.forEach((element) => element.addEventListener('click', cartItemClickListener));
   }
 }
 
@@ -78,10 +78,18 @@ const createProductItemElement = ({ id: sku, title: name, thumbnail: image }) =>
 };
 
 // Busca os produtos pelo ID
-fetchProducts('computador').then((data) => {
-  data.results.forEach((product) => {
-    sectionItemsPai.appendChild(createProductItemElement(product));
-  });
-});
+async function createProduct() {
+  const loading = document.createElement('h2');
+  loading.className = 'loading';
+  loading.innerHTML = 'carregando...';
+  sectionItemsPai.appendChild(loading);
+  await fetchProducts('computador')
+    .then((data) => {
+      data.results.forEach((product) => {
+        sectionItemsPai.appendChild(createProductItemElement(product));
+      });
+    });
+  sectionItemsPai.removeChild(loading);
+}
 
-window.onload = () => { loadStorage(); };
+window.onload = () => { createProduct(); loadStorage(); };
