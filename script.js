@@ -1,10 +1,14 @@
 const sectionItemsPai = document.querySelector('.items');
 const listCartItems = document.querySelector('.cart__items');
 const buttonEsvazia = document.querySelector('.empty-cart');
+const resultPrice = document.querySelector('.total-price');
+const valor = document.createElement('span');
 
 // Função do evento do botão Esvaziar Carrinho
 const esvaziaCarrinho = () => {
   listCartItems.innerHTML = '';
+  resultPrice.removeChild(valor);
+  saveCartItems(listCartItems.innerHTML);
 };
 
 buttonEsvazia.addEventListener('click', esvaziaCarrinho);
@@ -35,6 +39,18 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   return li;
 };
 
+// Função Storage prices
+const preco = [];
+const pricesStorage = (price) => localStorage.setItem('prices', JSON.stringify(price));
+
+const getPrices = () => JSON.parse(localStorage.getItem('prices'));
+
+const resultado = () => {
+  if (localStorage.getItem('prices')) {
+   return getPrices().reduce((acc, cur) => acc + cur, 0);
+  }
+};
+
 // Função do evento de click do botão Adicionar ao Carrinho
 function adicionaItem(event) {
   if (event.target.classList.contains('item__add')) {
@@ -43,6 +59,11 @@ function adicionaItem(event) {
       listCartItems.appendChild(createCartItemElement(data));
       const lista = listCartItems.innerHTML;
       saveCartItems(lista);
+      const prices = data.price;
+      preco.push(prices);
+      pricesStorage(preco);
+      valor.innerText = `${Math.round((resultado() + Number.EPSILON) * 100) / 100}`;
+      resultPrice.appendChild(valor);
     });
   }
 }
@@ -52,6 +73,8 @@ function loadStorage() {
     listCartItems.innerHTML = getSavedCartItems();
     const listas = document.querySelectorAll('li');
     listas.forEach((element) => element.addEventListener('click', cartItemClickListener));
+    valor.innerText = `${Math.round((resultado() + Number.EPSILON) * 100) / 100}`;
+    resultPrice.appendChild(valor);
   }
 }
 
@@ -92,4 +115,4 @@ async function createProduct() {
   sectionItemsPai.removeChild(loading);
 }
 
-window.onload = () => { createProduct(); loadStorage(); };
+window.onload = () => { createProduct(); loadStorage(); resultado(); };
