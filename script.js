@@ -4,10 +4,23 @@ const buttonEsvazia = document.querySelector('.empty-cart');
 const resultPrice = document.querySelector('.total-price');
 const valor = document.createElement('span');
 
+// Função Storage prices
+const preco = [];
+const pricesStorage = (price) => localStorage.setItem('prices', JSON.stringify(price));
+
+const getPrices = () => JSON.parse(localStorage.getItem('prices'));
+
+const resultado = () => {
+  if (localStorage.getItem('prices')) {
+   return getPrices().reduce((acc, cur) => acc + cur, 0);
+  }
+};
+
 // Função do evento do botão Esvaziar Carrinho
 const esvaziaCarrinho = () => {
   listCartItems.innerHTML = '';
   resultPrice.removeChild(valor);
+  pricesStorage(preco);
   saveCartItems(listCartItems.innerHTML);
 };
 
@@ -37,18 +50,6 @@ const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-};
-
-// Função Storage prices
-const preco = [];
-const pricesStorage = (price) => localStorage.setItem('prices', JSON.stringify(price));
-
-const getPrices = () => JSON.parse(localStorage.getItem('prices'));
-
-const resultado = () => {
-  if (localStorage.getItem('prices')) {
-   return getPrices().reduce((acc, cur) => acc + cur, 0);
-  }
 };
 
 // Função do evento de click do botão Adicionar ao Carrinho
