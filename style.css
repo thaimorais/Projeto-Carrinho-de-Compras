@@ -147,3 +147,12 @@ body {
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
 }
+
+li {
+  margin: 5px 10px;
+  padding: 15px;
+  box-shadow: 10px 5px 5px rgb(10, 118, 79);
+  background-color: rgb(3, 52, 45);
+  color: beige;
+  font-size: 13px;
+}
