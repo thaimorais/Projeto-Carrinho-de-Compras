@@ -12,8 +12,8 @@ const sumCart = () => {
     sum += parseFloat(product.innerHTML.split('$')[1] * 100);
   });
   value.innerHTML = sum / 100;
-  resultPrice.appendChild(value)
-}
+  resultPrice.appendChild(value);
+};
 
 // Função do evento do botão Esvaziar Carrinho
 const esvaziaCarrinho = () => {
