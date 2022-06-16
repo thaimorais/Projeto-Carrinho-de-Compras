@@ -1,16 +1,16 @@
 const sectionItemsPai = document.querySelector('.items');
 const listCartItems = document.querySelector('.cart__items');
 const buttonEsvazia = document.querySelector('.empty-cart');
-const resultPrice = document.querySelector('.total-price');
+const resultPrice = document.querySelector('.value');
 const value = document.createElement('span');
 
 const sumCart = () => {
   let sum = 0;
-
   const produtos = document.querySelectorAll('li');
   produtos.forEach((product) => {
     sum += parseFloat(product.innerHTML.split('$')[1] * 100);
   });
+  value.className = 'total-price';
   value.innerHTML = sum / 100;
   resultPrice.appendChild(value);
 };
@@ -67,6 +67,10 @@ function adicionaItem(event) {
 function loadStorage() {
   if (localStorage.getItem('cartItems')) {
     listCartItems.innerHTML = getSavedCartItems();
+    const produtos = document.querySelectorAll('li');
+    produtos.forEach((elemento) => {
+      elemento.addEventListener('click', cartItemClickListener);
+    });
     sumCart();
   }
 }
