@@ -13,6 +13,4 @@ Além disso, foram desenvolvidos testes unitários utilizando Jest contemplando 
 ## Como visualizar o projeto
 * Clone o repositório:
 ```git clone git@github.com:thaimorais/Projeto-Carrinho-de-Compras.git```
-* Instale as dependências:
-```npm install```
 * Abra seu editor e execute a aplicação
